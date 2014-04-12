@@ -12,6 +12,8 @@ column name => {
     is_nullable => 1,
 };
 
+has_many lines => 'DocExamples::Schema::Result::OrderItem', 'order_id';
+has_many delivery_charge => 'DocExamples::Schema::Result::OrderItem', 'order_id', { where => { type => 'delivery' } };
 
 
 1;
