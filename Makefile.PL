@@ -29,8 +29,10 @@ build_requires (
 );
 
 requires (
-   #'ABC'              => 1.6,
-   #'Foo::Bar::Module' => 5.0401,
+   'Test::Most'       => 0,
+   'Test::DBIx::Class' => 0,
+   'DBIx::Class'        => 0,
+   'DBIx::Class::Candy' => 0,
 );
 
 install_as_cpan;
