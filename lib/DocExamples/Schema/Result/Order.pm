@@ -13,6 +13,7 @@ column name => {
 };
 
 has_many lines => 'DocExamples::Schema::Result::OrderItem', 'order_id';
+
 has_many delivery_charge => 'DocExamples::Schema::Result::OrderItem', 'order_id', 
             { where => { type => 'delivery' } };
 
