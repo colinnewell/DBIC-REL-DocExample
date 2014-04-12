@@ -22,14 +22,19 @@ ok $order->create_related('delivery_charge', {
     quantity => 1,
     price => 2.96,
 });
+ok my $order2 = Order->create({ name => 'SECOND' });
 my ($delivery) = $order->delivery_charge;
 is $delivery->price, 2.96;
 
 {
+    my $o = Order->first;
+    is $o->name, 'test';
+    is $o->delivery_charge->count, 1, 'Check correct number of delivery charge lines';
+    is Order->first->delivery_charge->count, 1, 'Check correct number of delivery charge lines';
     my $orders = Order->search(undef, {
         prefetch => ['delivery_charge'],
     });
-    is $orders->count, 1;
+    is $orders->count, 2;
     my ($order) = $orders->all;
     my @lines = $order->delivery_charge;
     is scalar @lines, 1, 'Check correct number of delivery charge lines';
