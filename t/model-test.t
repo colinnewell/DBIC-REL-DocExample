@@ -35,10 +35,12 @@ is $delivery->price, 2.96;
     is scalar @lines, 1, 'Check correct number of delivery charge lines';
 }
 
-my $with_products = Order->search(undef, {
-    prefetch => ['standard_products'],
-});
-my ($ord) = $with_products->all;
-is $ord->standard_products->count, 1, 'Check we have the correct number of order lines';
+{
+    my $with_products = Order->search(undef, {
+        prefetch => ['standard_products'],
+    });
+    my ($ord) = $with_products->all;
+    is $ord->standard_products->count, 1, 'Check we have the correct number of order lines';
+}
 
 done_testing;
