@@ -12,6 +12,12 @@ column name => {
     is_nullable => 1,
 };
 
+column active => {
+    data_type => 'boolean',
+    is_nullable => 0,
+    default_value => 1,
+};
+
 has_many lines => 'DocExamples::Schema::Result::OrderItem', 'order_id';
 
 has_many delivery_charge => 'DocExamples::Schema::Result::OrderItem', 'order_id', 
@@ -27,5 +33,7 @@ has_many standard_products => 'DocExamples::Schema::Result::OrderItem',
                     }
                 );
             }; # 'Custom join conditions' perldoc DBIx::Class:Relationship::Base
+
+__PACKAGE__->resultset_attributes({ where => { active => 1 } });
 
 1;

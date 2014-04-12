@@ -34,7 +34,7 @@ is $delivery->price, 2.96;
     my $orders = Order->search(undef, {
         prefetch => ['delivery_charge'],
     });
-    is $orders->count, 2;
+    is $orders->count, 1;
     my ($order) = $orders->all;
     my @lines = $order->delivery_charge;
     is scalar @lines, 1, 'Check correct number of delivery charge lines';
@@ -46,6 +46,20 @@ is $delivery->price, 2.96;
     });
     my ($ord) = $with_products->all;
     is $ord->standard_products->count, 1, 'Check we have the correct number of order lines';
+}
+
+{
+    my $o = Order->first;
+    is $o->name, 'test';
+    is $o->delivery_charge->count, 1, 'Check correct number of delivery charge lines';
+    is Order->first->delivery_charge->count, 1, 'Check correct number of delivery charge lines';
+    my $orders = Order->search(undef, {
+        join => ['delivery_charge'],
+    });
+    is $orders->count, 1; # NOTE: this only returns 1 order
+    my ($order) = $orders->all;
+    my @lines = $order->delivery_charge;
+    is scalar @lines, 1, 'Check correct number of delivery charge lines';
 }
 
 done_testing;
